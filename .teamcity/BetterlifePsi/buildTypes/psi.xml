@@ -89,7 +89,7 @@ git clone ssh://570e515c0c1e6624840000f7@dstore-betterlife.rhcloud.com/~/git/dst
 cp -R betterlife-psi-%CURRENT_DEV_VERSION%/. openshift
 cd openshift
 rm .openshift/markers/force_clean_build
-git add .
+git add --all .
 git commit -m "Deploy %env.BUILD_VCS_NUMBER_PsiDevelopment%"
 git push]]></param>
           <param name="teamcity.step.mode" value="default" />
