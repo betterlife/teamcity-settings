@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="5f168c2f-9e80-400d-a948-fb2b17cd18b5" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/9.0/project-config.xsd">
+  <name>VCS Check in Build</name>
+  <description />
+  <settings>
+    <options>
+      <option name="allowExternalStatus" value="true" />
+      <option name="artifactRules" value="dist" />
+    </options>
+    <disabled-settings>
+      <setting-ref ref="RUNNER_8" />
+    </disabled-settings>
+    <parameters>
+      <param name="env.SECRET_KEY" value="123QWEasDzXcqazw" />
+      <param name="env.SECURITY_PASSWORD_SALT" value="123QWEasDzXcqazw" />
+      <param name="env.SENTRY_DSN" value="https://9f6d2c7e33f24b77baba8a3e17a6dcfa:0afc65c1b9124c61adae430fad653718@app.getsentry.com/50555" />
+      <param name="env.TEAMCITY_BUILD_BRANCH" value="%teamcity.build.branch%" />
+      <param name="env.TEAMCITY_BUILD_COMMIT" value="%system.build.vcs.number%" />
+      <param name="env.TEAMCITY_BUILD_ID" value="%teamcity.build.id%" />
+      <param name="env.TEAMCITY_BUILD_REPOSITORY" value="%vcsroot.PsiDevelopment.url%" />
+      <param name="env.TEAMCITY_BUILD_URL" value="%teamcity.serverUrl%/viewLog.html?buildId=%teamcity.build.id%" />
+      <param name="env.TEST_DATABASE_URL" value="postgres://flask_sit:flask_sit@localhost:5432/flask_sit" />
+      <param name="env.TESTING" value="True" />
+    </parameters>
+    <build-runners>
+      <runner id="RUNNER_3" name="Create virtualenv" type="simpleRunner">
+        <parameters>
+          <param name="script.content" value="virtualenv venv" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_1" name="Install requirements" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[source venv/bin/activate
+pip install -r requirements/test.txt]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_2" name="Run test and code coverage" type="simpleRunner">
+        <parameters>
+          <param name="script.content" value="venv/bin/nosetests -w tests --with-coverage --cover-erase --with-xunit --cover-branches --xunit-file=nosetests.xml" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_4" name="Send code coverage to codecov" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[curl -s https://codecov.io/bash -o codecov.sh
+chmod +x codecov.sh
+./codecov.sh -t b0607487-ef58-48c2-9efa-8538b24fcdfd]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_6" name="Prepare swtag file" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[export current_build_date_format="+%%Y.%%m.%%d"
+export current_build_date="$(date $current_build_date_format)"
+echo "##teamcity[setParameter name='env.current_build_date' value='$current_build_date']"
+rm -rf swtag
+touch swtag
+echo "build commit: %build.vcs.number.PsiDevelopment%" >> swtag
+echo "build date  : $current_build_date" >> swtag
+echo "build number: %teamcity.build.id%" >> swtag
+echo "build branch: %teamcity.build.branch%" >> swtag
+echo "######################"
+cat  swtag
+echo "######################"]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_5" name="Build dist" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[rm -rf dist
+python setup.py sdist]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_7" name="Deploy to openshift development environment" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[cd dist
+tar xf betterlife-psi-%CURRENT_DEV_VERSION%.tar.gz
+rm -rf openshift
+git clone ssh://570e515c0c1e6624840000f7@dstore-betterlife.rhcloud.com/~/git/dstore.git/ openshift
+cp -R betterlife-psi-%CURRENT_DEV_VERSION%/. openshift
+cd openshift
+rm .openshift/markers/force_clean_build
+git add .
+git commit -m "Deploy %env.BUILD_VCS_NUMBER_PsiDevelopment%"
+git push]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_8" name="Clean up artifact folder" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[rm -rf dist/openshift
+rm -rf dist/betterlife-psi-%CURRENT_DEV_VERSION%]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="PsiDevelopment" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters />
+      </build-trigger>
+    </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_1" type="xml-report-plugin">
+        <parameters>
+          <param name="xmlReportParsing.reportDirs" value="nosetests.xml" />
+          <param name="xmlReportParsing.reportType" value="junit" />
+        </parameters>
+      </extension>
+      <extension id="BUILD_EXT_2" type="BuildFailureOnMetric">
+        <parameters>
+          <param name="anchorBuild" value="lastSuccessful" />
+          <param name="metricKey" value="buildPassedTestCount" />
+          <param name="metricThreshold" value="20" />
+          <param name="metricUnits" value="metricUnitsPercents" />
+          <param name="moreOrLess" value="less" />
+          <param name="withBuildAnchor" value="true" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup>
+      <policy type="daysAndBuilds" cleanup-level="EVERYTHING">
+        <parameters>
+          <param name="keepBuilds.count" value="365" />
+          <param name="keepDays.count" value="365" />
+        </parameters>
+      </policy>
+      <policy type="daysAndBuilds" cleanup-level="HISTORY_ENTRY">
+        <parameters>
+          <param name="keepBuilds.count" value="180" />
+          <param name="keepDays.count" value="180" />
+        </parameters>
+      </policy>
+      <policy type="daysAndBuilds" cleanup-level="ARTIFACTS">
+        <parameters>
+          <param name="keepBuilds.count" value="30" />
+          <param name="keepDays.count" value="30" />
+        </parameters>
+      </policy>
+    </cleanup>
+  </settings>
+</build-type>
+
