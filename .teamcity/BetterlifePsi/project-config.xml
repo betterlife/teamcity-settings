@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="2fff13f2-c1b6-4c3d-a4c8-6c42e78d65f1" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/9.0/project-config.xsd">
+  <name>Betterlife PSI</name>
+  <parameters>
+    <param name="CURRENT_DEV_VERSION" value="0.6.5" />
+    <param name="CURRENT_STABLE_VERSION" value="0.6.5" />
+  </parameters>
+  <cleanup />
+  <buildTypesOrder order="psi,BetterlifePsi_DeployToProduction" />
+</project>
+
