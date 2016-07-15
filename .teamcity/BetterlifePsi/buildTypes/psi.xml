@@ -8,6 +8,7 @@
       <option name="artifactRules" value="dist" />
     </options>
     <disabled-settings>
+      <setting-ref ref="RUNNER_6" />
       <setting-ref ref="RUNNER_7" />
       <setting-ref ref="RUNNER_8" />
     </disabled-settings>
