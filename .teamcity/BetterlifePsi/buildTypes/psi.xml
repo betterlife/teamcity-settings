@@ -42,7 +42,8 @@ pip install -r requirements/test.txt]]></param>
       </runner>
       <runner id="RUNNER_2" name="Run test and code coverage" type="simpleRunner">
         <parameters>
-          <param name="script.content" value="venv/bin/nosetests -w tests --with-coverage --cover-erase --with-xunit --cover-branches --xunit-file=nosetests.xml" />
+          <param name="script.content"><![CDATA[mv setup.cfg.template setup.cfg
+venv/bin/nosetests -w tests --with-coverage --cover-erase --with-xunit --cover-branches --xunit-file=nosetests.xml]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
