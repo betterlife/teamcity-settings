@@ -22,6 +22,7 @@
       <param name="env.TEAMCITY_BUILD_URL" value="%teamcity.serverUrl%/viewLog.html?buildId=%teamcity.build.id%" />
       <param name="env.TEST_DATABASE_URL" value="postgres://flask_sit:flask_sit@localhost:5432/flask_sit" />
       <param name="env.TESTING" value="True" />
+      <param name="PRODUCTION_GIT_URL" value="ssh://root@121.201.68.243/opt/betterlife/app/psi" />
     </parameters>
     <build-runners>
       <runner id="RUNNER_17" name="Create virtualenv" type="simpleRunner">
