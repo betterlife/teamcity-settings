@@ -9,7 +9,6 @@
       <option name="cleanBuild" value="true" />
     </options>
     <disabled-settings>
-      <setting-ref ref="RUNNER_24" />
       <setting-ref ref="RUNNER_25" />
       <setting-ref ref="vcsTrigger" />
     </disabled-settings>
@@ -79,13 +78,6 @@ echo "######################"]]></param>
         <parameters>
           <param name="script.content"><![CDATA[rm -rf dist
 python setup.py sdist]]></param>
-          <param name="teamcity.step.mode" value="default" />
-          <param name="use.custom.script" value="true" />
-        </parameters>
-      </runner>
-      <runner id="RUNNER_24" name="Clean up artifact folder" type="simpleRunner">
-        <parameters>
-          <param name="script.content" value="rm -rf dist/betterlife-psi-%CURRENT_STABLE_VERSION%" />
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
