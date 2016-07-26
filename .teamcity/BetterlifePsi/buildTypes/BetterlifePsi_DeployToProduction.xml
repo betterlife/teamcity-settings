@@ -9,7 +9,6 @@
       <option name="cleanBuild" value="true" />
     </options>
     <disabled-settings>
-      <setting-ref ref="RUNNER_25" />
       <setting-ref ref="vcsTrigger" />
     </disabled-settings>
     <parameters>
