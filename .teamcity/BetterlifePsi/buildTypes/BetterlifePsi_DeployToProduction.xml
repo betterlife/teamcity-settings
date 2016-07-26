@@ -92,6 +92,14 @@ python setup.py sdist]]></param>
           <param name="use.custom.script" value="true" />
         </parameters>
       </runner>
+      <runner id="RUNNER_26" name="Deploy to production" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[git remote add production %PRODUCTION_GIT_URL%
+git push production]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="PsiDevelopment" />
