@@ -9,7 +9,6 @@
       <option name="cleanBuild" value="true" />
     </options>
     <disabled-settings>
-      <setting-ref ref="RUNNER_23" />
       <setting-ref ref="RUNNER_24" />
       <setting-ref ref="RUNNER_25" />
       <setting-ref ref="vcsTrigger" />
@@ -80,21 +79,6 @@ echo "######################"]]></param>
         <parameters>
           <param name="script.content"><![CDATA[rm -rf dist
 python setup.py sdist]]></param>
-          <param name="teamcity.step.mode" value="default" />
-          <param name="use.custom.script" value="true" />
-        </parameters>
-      </runner>
-      <runner id="RUNNER_23" name="Deploy to openshift production" type="simpleRunner">
-        <parameters>
-          <param name="script.content"><![CDATA[cd dist
-tar xf betterlife-psi-%CURRENT_STABLE_VERSION%.tar.gz
-rm -rf openshift
-git clone ssh://575693282d5271e5a60000a8@store-betterlife.rhcloud.com/~/git/store.git/ openshift
-cp -R betterlife-psi-%CURRENT_STABLE_VERSION%/. openshift
-cd openshift
-git add .
-git commit -m "Deploy %env.BUILD_VCS_NUMBER_PsiDevelopment%"
-git push]]></param>
           <param name="teamcity.step.mode" value="default" />
           <param name="use.custom.script" value="true" />
         </parameters>
