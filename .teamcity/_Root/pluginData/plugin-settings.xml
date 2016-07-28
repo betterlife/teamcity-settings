@@ -1,15 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<settings>
-  <issueTrackers>
-    <trackerConnection key="youtrack1" type="youtrack">
-      <param name="secure:password" value="zxx192f478978efc1c5775d03cbe80d301b" />
-      <param name="name" value="YouTrack" />
-      <param name="host" value="http://agile.betterlife.io" />
-      <param name="idPrefix" value="BIW BE BW JBS DSM SAN" />
-      <param name="autoSync" value="true" />
-      <param name="username" value="root" />
-    </trackerConnection>
-  </issueTrackers>
-  <versionedSettings rootId="HttpsGithubComBetterlifeTeamcitySettingsGit" enabled="true" showChanges="true" buildSettings="ALWAYS_USE_CURRENT" />
-</settings>
+<settings />
 
