@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="9c41291d-caba-42a9-ba81-3b884b9c45bc" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/9.0/project-config.xsd">
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="9c41291d-caba-42a9-ba81-3b884b9c45bc" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/10.0/project-config.xsd">
   <name>Deploy to Production</name>
   <description />
   <settings>
     <options>
       <option name="allowExternalStatus" value="true" />
       <option name="artifactRules" value="dist" />
+      <option name="checkoutMode" value="ON_SERVER" />
       <option name="cleanBuild" value="true" />
     </options>
     <disabled-settings>
       <setting-ref ref="vcsTrigger" />
     </disabled-settings>
     <parameters>
+      <param name="PRODUCTION_GIT_URL" value="ssh://root@121.201.68.243/opt/betterlife/app/psi" />
       <param name="env.SECRET_KEY" value="123QWEasDzXcqazw" />
       <param name="env.SECURITY_PASSWORD_SALT" value="123QWEasDzXcqazw" />
       <param name="env.SENTRY_DSN" value="https://9f6d2c7e33f24b77baba8a3e17a6dcfa:0afc65c1b9124c61adae430fad653718@app.getsentry.com/50555" />
@@ -20,9 +22,8 @@
       <param name="env.TEAMCITY_BUILD_ID" value="%teamcity.build.id%" />
       <param name="env.TEAMCITY_BUILD_REPOSITORY" value="%vcsroot.PsiDevelopment.url%" />
       <param name="env.TEAMCITY_BUILD_URL" value="%teamcity.serverUrl%/viewLog.html?buildId=%teamcity.build.id%" />
-      <param name="env.TEST_DATABASE_URL" value="postgres://flask_sit:flask_sit@localhost:5432/flask_sit" />
       <param name="env.TESTING" value="True" />
-      <param name="PRODUCTION_GIT_URL" value="ssh://root@121.201.68.243/opt/betterlife/app/psi" />
+      <param name="env.TEST_DATABASE_URL" value="postgres://flask_sit:flask_sit@localhost:5432/flask_sit" />
     </parameters>
     <build-runners>
       <runner id="RUNNER_17" name="Create virtualenv" type="simpleRunner">

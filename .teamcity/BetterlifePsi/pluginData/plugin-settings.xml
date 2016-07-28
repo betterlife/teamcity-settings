@@ -1,15 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<settings>
-  <project-graphs>
-    <graph title="Number of Failed Test" defaultFilters="" hideFilters="" id="customGraph1" seriesTitle="Build">
-      <valueType key="FailedTestCount" title="Number of Failed Tests" sourceBuildTypeId="psi" />
-    </graph>
-    <graph title="Build Duration" defaultFilters="" hideFilters="" id="customGraph4" seriesTitle="Build">
-      <valueType key="buildStageDuration:buildFinishing" title="buildStageDuration:buildFinishing" sourceBuildTypeId="psi" />
-    </graph>
-    <graph title="Build Test Status" defaultFilters="" hideFilters="" id="customGraph7" seriesTitle="Build">
-      <valueType key="BuildTestStatus" title="BuildTestStatus" sourceBuildTypeId="psi" />
-    </graph>
-  </project-graphs>
-</settings>
+<settings />
 

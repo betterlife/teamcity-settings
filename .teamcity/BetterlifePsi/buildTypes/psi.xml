@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="5f168c2f-9e80-400d-a948-fb2b17cd18b5" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/9.0/project-config.xsd">
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="5f168c2f-9e80-400d-a948-fb2b17cd18b5" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/10.0/project-config.xsd">
   <name>VCS Check in Build</name>
   <description />
   <settings>
     <options>
       <option name="allowExternalStatus" value="true" />
       <option name="artifactRules" value="dist" />
+      <option name="checkoutMode" value="ON_SERVER" />
     </options>
     <disabled-settings>
       <setting-ref ref="RUNNER_6" />
@@ -21,8 +22,8 @@
       <param name="env.TEAMCITY_BUILD_ID" value="%teamcity.build.id%" />
       <param name="env.TEAMCITY_BUILD_REPOSITORY" value="%vcsroot.PsiDevelopment.url%" />
       <param name="env.TEAMCITY_BUILD_URL" value="%teamcity.serverUrl%/viewLog.html?buildId=%teamcity.build.id%" />
-      <param name="env.TEST_DATABASE_URL" value="postgres://flask_sit:flask_sit@localhost:5432/flask_sit" />
       <param name="env.TESTING" value="True" />
+      <param name="env.TEST_DATABASE_URL" value="postgres://flask_sit:flask_sit@localhost:5432/flask_sit" />
     </parameters>
     <build-runners>
       <runner id="RUNNER_3" name="Create virtualenv" type="simpleRunner">
